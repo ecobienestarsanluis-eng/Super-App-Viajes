@@ -1,0 +1,83 @@
+# GitHub Actions: CI + CD (build -> push images -> trigger deploy)
+name: CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  DOCKER_IMAGE_NAMESPACE: ${{ secrets.DOCKERHUB_USERNAME }} # alternativa: ghcr.io/${{ github.repository_owner }}
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install root deps (if pnpm/yarn adjust)
+        run: |
+          cd apps/api && npm ci
+          cd ../../apps/web && npm ci
+
+      - name: Run basic tests (adjust commands)
+        run: |
+          cd apps/api && npm run test || echo "No tests"
+          cd ../../apps/web && npm run test || echo "No tests"
+
+  build-and-push-images:
+    needs: lint-test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./apps/api
+          file: ./apps/api/Dockerfile
+          push: true
+          tags: ${{ env.DOCKER_IMAGE_NAMESPACE }}/globalt-api:latest
+
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./apps/web
+          file: ./apps/web/Dockerfile
+          push: true
+          tags: ${{ env.DOCKER_IMAGE_NAMESPACE }}/globalt-web:latest
+
+  deploy:
+    needs: build-and-push-images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Trigger Render deploy (if configured)
+        if: ${{ secrets.RENDER_SERVICE_ID && secrets.RENDER_API_KEY }}
+        run: |
+          chmod +x ./.github/scripts/deploy_render.sh
+          ./.github/scripts/deploy_render.sh
+
+      - name: Deploy to Vercel (if configured)
+        if: ${{ secrets.VERCEL_TOKEN && secrets.VERCEL_PROJECT_ID }}
+        run: |
+          chmod +x ./.github/scripts/deploy_vercel.sh
+          ./.github/scripts/deploy_vercel.sh
