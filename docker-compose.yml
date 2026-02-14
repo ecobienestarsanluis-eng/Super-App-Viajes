@@ -1,0 +1,50 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: globalt
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: globalt_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: "postgresql://globalt:changeme@postgres:5432/globalt_db"
+      REDIS_URL: "redis://redis:6379"
+      NODE_ENV: development
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./apps/api:/usr/src/app
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    environment:
+      API_URL: "http://localhost:4000"
+      NODE_ENV: development
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps/web:/usr/src/app
+
+volumes:
+  pgdata:
