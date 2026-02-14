@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Global Tierra — Mockup Home</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --earth-1:#2f5d43; /* deep green */
+      --earth-2:#b37a2a; /* ochre */
+      --earth-3:#083b4c; /* deep blue */
+      --muted:#efe8dd;
+    }
+    body { font-family: 'Nunito', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: var(--muted); }
+    .ancestral-accent { background: linear-gradient(135deg, rgba(179,122,42,0.06), rgba(47,93,67,0.04)); border: 1px solid rgba(47,93,67,0.06); }
+    .btn-primary { background: linear-gradient(90deg,var(--earth-2),#d69b3a); color: white; }
+    .btn-ghost { border:1px solid rgba(0,0,0,0.06); background:white; }
+    /* decorative small icon style */
+    .glyph { width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center; border-radius:8px; background:rgba(0,0,0,0.04); }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="w-full bg-white/60 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <!-- Logo: simple ancestral glyph -->
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 bg-[linear-gradient(180deg,#d69b3a,#b37a2a)] rounded-full flex items-center justify-center shadow-sm">
+            <!-- spiral glyph -->
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3C8.13 3 5 6.13 5 10c0 2.93 2.12 5.36 5 5.9V17c-3.31 0-6-2.69-6-6 0-3.31 2.69-6 6-6s6 2.69 6 6c0 1.1-.9 2-2 2h-1" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="text-lg font-extrabold" style="font-family: 'Cormorant Garamond', serif;">Global Tierra</div>
+            <div class="text-xs text-gray-500 -mt-1">Experiencias &amp; Tours</div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-700">
+        <a href="#" class="hover:text-emerald-700">Explorar</a>
+        <a href="#" class="hover:text-emerald-700">Reservar</a>
+        <a href="#" class="hover:text-emerald-700">Mi Viaje</a>
+        <a href="#" class="hover:text-emerald-700">Contacto</a>
+        <button class="ml-4 px-4 py-2 rounded-lg btn-primary shadow-sm">Reservar Ahora</button>
+      </nav>
+
+      <div class="md:hidden">
+        <button class="p-2 rounded-lg btn-ghost">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="relative">
+    <div class="h-[68vh] md:h-[75vh] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1600&auto=format&fit=crop&s=');">
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent to-white/60"></div>
+      <div class="absolute inset-0 flex items-center">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-6">
+              <h1 class="text-3xl md:text-5xl font-extrabold text-white drop-shadow-lg" style="text-shadow: 0 6px 18px rgba(0,0,0,0.45); font-family: 'Cormorant Garamond', serif;">
+                Explora experiencias únicas en Global Tierra
+              </h1>
+              <p class="text-white/90 max-w-xl text-lg">Aventuras, bienestar y cultura — diseñadas con respeto a la tierra y sus pueblos. Reserva con seguridad y vive lo ancestral, moderno y auténtico.</p>
+
+              <!-- Search card -->
+              <div class="mt-4 p-4 md:p-6 bg-white/95 rounded-2xl shadow-xl w-full ancestral-accent">
+                <form id="searchForm" class="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 items-end">
+                  <div>
+                    <label class="text-xs text-gray-600">Destino</label>
+                    <div class="mt-1">
+                      <select id="dest" class="w-full rounded-lg border-gray-200 p-3">
+                        <option>San Luis - Antioquia</option>
+                        <option>Patagonia</option>
+                        <option>Río Samaná</option>
+                        <option>Sendero La Cuba</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="text-xs text-gray-600">Fecha</label>
+                    <div class="mt-1">
+                      <input id="date" type="date" class="w-full rounded-lg border-gray-200 p-3" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="text-xs text-gray-600">Tipo de experiencia</label>
+                    <div class="mt-1 flex gap-2">
+                      <select id="type" class="w-full rounded-lg border-gray-200 p-3">
+                        <option>Aventura</option>
+                        <option>Bienestar</option>
+                        <option>Cultural</option>
+                      </select>
+                      <button type="submit" class="px-4 py-3 rounded-lg btn-primary shadow-md">Buscar</button>
+                    </div>
+                  </div>
+                </form>
+                <p id="searchResult" class="mt-3 text-sm text-gray-500 hidden"></p>
+              </div>
+
+            </div>
+
+            <div class="hidden md:block">
+              <!-- small info panel with ancestral icons -->
+              <div class="bg-white/90 rounded-2xl p-6 shadow-lg">
+                <div class="flex items-center gap-4">
+                  <div class="glyph">
+                    <!-- mountain icon -->
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M2 20h20L12 6 2 20z" stroke="#2f5d43" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div>
+                    <div class="text-sm font-semibold">Conexión local</div>
+                    <div class="text-xs text-gray-500">Operadores comunitarios</div>
+                  </div>
+                </div>
+
+                <div class="mt-4 flex items-center gap-4">
+                  <div class="glyph">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 12h18" stroke="#b37a2a" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  </div>
+                  <div>
+                    <div class="text-sm font-semibold">Pagos seguros</div>
+                    <div class="text-xs text-gray-500">PayPal, Stripe y locales</div>
+                  </div>
+                </div>
+
+                <div class="mt-4 flex items-center gap-4">
+                  <div class="glyph">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2v20" stroke="#083b4c" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  </div>
+                  <div>
+                    <div class="text-sm font-semibold">Bienestar ancestral</div>
+                    <div class="text-xs text-gray-500">Rituales y terapias locales</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Destacados -->
+  <main class="max-w-7xl mx-auto px-6 -mt-16 relative z-20">
+    <section class="bg-white rounded-2xl p-6 shadow-lg">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-2xl font-extrabold">Tours Destacados</h2>
+          <p class="text-sm text-gray-500">Selección curada por nuestras comunidades y expertos.</p>
+        </div>
+        <div class="text-sm text-gray-600">Ver todo →</div>
+      </div>
+
+      <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Card 1 -->
+        <article class="rounded-2xl overflow-hidden shadow-md bg-white">
+          <div class="h-44 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop&s=')"></div>
+          <div class="p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="font-semibold">Rafting Río Samaná</h3>
+                <div class="text-xs text-gray-500">Duración: 1 día · Nivel: Medio</div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-bold text-emerald-700">$120</div>
+                <div class="text-xs text-gray-400">por persona</div>
+              </div>
+            </div>
+            <p class="mt-3 text-sm text-gray-600">Descenso en rápidos y contacto directo con naturaleza y comunidades ribereñas.</p>
+            <div class="mt-4 flex items-center justify-between">
+              <button class="px-3 py-2 rounded-lg border btn-ghost text-sm">Ver detalles</button>
+              <button class="px-4 py-2 rounded-lg btn-primary text-sm">Reservar</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="rounded-2xl overflow-hidden shadow-md bg-white">
+          <div class="h-44 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop&s=')"></div>
+          <div class="p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="font-semibold">Senderismo La Cuba</h3>
+                <div class="text-xs text-gray-500">Duración: 2 días · Nivel: Medio</div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-bold text-emerald-700">$80</div>
+                <div class="text-xs text-gray-400">por persona</div>
+              </div>
+            </div>
+            <p class="mt-3 text-sm text-gray-600">Rutas ancestrales y miradores únicos. Ideal para reconectar.</p>
+            <div class="mt-4 flex items-center justify-between">
+              <button class="px-3 py-2 rounded-lg border btn-ghost text-sm">Ver detalles</button>
+              <button class="px-4 py-2 rounded-lg btn-primary text-sm">Reservar</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="rounded-2xl overflow-hidden shadow-md bg-white">
+          <div class="h-44 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1508609349937-5ec4ae374ebf?q=80&w=1200&auto=format&fit=crop&s=')"></div>
+          <div class="p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="font-semibold">Bienestar Manatury</h3>
+                <div class="text-xs text-gray-500">Duración: 1 día · Nivel: Suave</div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-bold text-emerald-700">$60</div>
+                <div class="text-xs text-gray-400">por persona</div>
+              </div>
+            </div>
+            <p class="mt-3 text-sm text-gray-600">Rituales, sonoterapia y alimentos locales para restablecer equilibrio.</p>
+            <div class="mt-4 flex items-center justify-between">
+              <button class="px-3 py-2 rounded-lg border btn-ghost text-sm">Ver detalles</button>
+              <button class="px-4 py-2 rounded-lg btn-primary text-sm">Reservar</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Ancestral snippet -->
+    <section class="mt-8 p-6 rounded-2xl ancestral-accent shadow-lg">
+      <div class="flex items-center gap-6">
+        <div class="w-16 h-16 rounded-lg bg-[url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=400&auto=format&fit=crop&s=')] bg-cover"></div>
+        <div>
+          <div class="text-lg font-semibold">Viajar es volver a la raíz</div>
+          <div class="text-sm text-gray-600">Cada experiencia respeta la tradición local y contribuye al bienestar de las comunidades.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-10 mb-16 text-sm text-gray-600">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div>
+          <div class="font-semibold">Contacto</div>
+          <div class="text-gray-500">maurodestinodeveloper@gmail.com · WhatsApp: +57 323 915 7120</div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <img src="https://www.svgrepo.com/show/223047/paypal.svg" alt="paypal" class="w-8 h-8" />
+            <span class="text-gray-500">Pagos: PayPal · Stripe · Wompi</span>
+          </div>
+
+          <div class="text-gray-500">© 2026 Global Tierra</div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // pequeño comportamiento del buscador (demo)
+    document.getElementById('searchForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const dest = document.getElementById('dest').value;
+      const date = document.getElementById('date').value || 'fecha flexible';
+      const type = document.getElementById('type').value;
+      const msg = `Buscando ${type} en ${dest} para ${date}... (demo)`;
+      const el = document.getElementById('searchResult');
+      el.textContent = msg;
+      el.classList.remove('hidden');
+      setTimeout(()=> alert(msg + "\\nTe mostraríamos resultados filtrados aquí."), 300);
+    });
+  </script>
+</body>
+</html>
