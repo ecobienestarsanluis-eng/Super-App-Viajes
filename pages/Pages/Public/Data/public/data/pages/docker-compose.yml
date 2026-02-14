@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    container_name: superapp-viajes-web
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
+
+  db:
+    image: postgres:15
+    container_name: superapp-viajes-db
+    restart: always
+    environment:
+      POSTGRES_USER: viajes_user
+      POSTGRES_PASSWORD: viajes_pass
+      POSTGRES_DB: viajes_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
